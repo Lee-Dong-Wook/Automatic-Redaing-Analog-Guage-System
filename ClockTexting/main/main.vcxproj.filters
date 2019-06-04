@@ -26,5 +26,8 @@
     <ClInclude Include="ImagePreprocessing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ExtractTime.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
