@@ -7,7 +7,7 @@
 //					  2. ExtractHands    : 시계 몸통에서 시침과 분침을 추출 
 // openCV 버전      : 4.0.1 
 // 작성 시작 일시    : 2019. 06. 02.
-// 마지막 수정 일시  : 2019. 06. 04.
+// 마지막 수정 일시  : 2019. 06. 05.
 // 작성자 및 수정자  : 이동욱 
 // e-mail			: dongwookRaynor@gmail.com 
 // github 링크		: https://github.com/Lee-Dong-Wook/ClockTexting
@@ -30,8 +30,6 @@ void Extract_Hands(Mat gray, Mat &bgr, int nline) {
 
 	cvtColor(gray, bgr, COLOR_GRAY2BGR);												//gray는 전처리가 된 바이너리 이미지 채널 1개
 																						//bgr는 //gray의 채널을 gray -> BGR
-
-
 	vector<Vec4i> lines;																// 검출된 선 
 	HoughLinesP(gray, lines, rho, theta, 50, 50, 10);									//확률적 호프 변환 
 
@@ -43,22 +41,29 @@ void Extract_Hands(Mat gray, Mat &bgr, int nline) {
 
 void draw_Lines(Mat gray, Mat& bgr, vector<Vec4i> lines, int nline) {
 
+	Vec4i li;
+
 	for (size_t i = 0; i < min((int)lines.size(), nline); i++)							//라인의 크기와 nline을 비교해서 적은 수를 정해 for문 반복 
 	{
-		Vec4i li = lines[i];
-		line(bgr, Point(li[0], li[1]), Point(li[2], li[3]), Scalar(0, 255, 0), 2, LINE_AA);		//시침 분침	분할 
+		li = lines[i];
+
+		if (i == 2) {
+			line(bgr, Point(li[0], li[1]), Point(li[2], li[3]), Scalar(0, 0, 255), 3, LINE_AA);			//시침 추출 
+		}
+		else {
+			line(bgr, Point(li[0], li[1]), Point(li[2], li[3]), Scalar(0, 255, 0), 3, LINE_AA);			//분침 추출 
+		}		
 	}
-	imshow("선", bgr);
+	imshow("시침 분침 표시 ", bgr);
 	
-}
-
-void calc_Time() {
-
 }
 
 void calc_Angle() {
 
 }
 
+void calc_Time() {
+
+}
 
 
