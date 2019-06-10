@@ -153,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ExtractTime.hpp" />
-    <ClInclude Include="Extract_Edge.hpp" />
     <ClInclude Include="ImagePreprocessing.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

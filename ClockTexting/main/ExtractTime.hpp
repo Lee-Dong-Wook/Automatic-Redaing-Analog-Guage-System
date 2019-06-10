@@ -48,10 +48,10 @@ void draw_Lines(Mat gray, Mat& bgr, vector<Vec4i> lines, int nline) {
 		li = lines[i];
 
 		if (i == 2) {
-			line(bgr, Point(li[0], li[1]), Point(li[2], li[3]), Scalar(0, 0, 255), 3, LINE_AA);			//시침 추출 
+			line(bgr, Point(li[0], li[1]), Point(li[2], li[3]), Scalar(0, 0, 255), 1, LINE_AA);			//시침 추출 
 		}
 		else {
-			line(bgr, Point(li[0], li[1]), Point(li[2], li[3]), Scalar(0, 255, 0), 3, LINE_AA);			//분침 추출 
+			line(bgr, Point(li[0], li[1]), Point(li[2], li[3]), Scalar(0, 255, 0), 1, LINE_AA);			//분침 추출 
 		}		
 	}
 	imshow("시침 분침 표시 ", bgr);
