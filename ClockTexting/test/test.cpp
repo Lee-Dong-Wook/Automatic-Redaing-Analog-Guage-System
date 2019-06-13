@@ -14,8 +14,8 @@ double ATAN2(Point2d start, Point2d end) {
 
 	double ang = atan2(dx, dy) * (180.0 / PI);
 
-	if (ang < 0.0)
-	{
+	if (ang < 0.0){
+
 		ang += 360.0;
 	}
 	
