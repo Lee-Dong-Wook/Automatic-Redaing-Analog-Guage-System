@@ -24,13 +24,13 @@ using namespace cv;
 #define PI 3.1415926535
 
 //전방 선언
-void	draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, int& hour, int& minute);
+void	draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, double& ang);
 void	Calc_AnglePoint(Point pt_start, Point pt_end, Point pt_center, Point& pt_angle);
 double  Calc_Angle(Point2d start, Point2d end);
-int		Extract_Hour(double angle);
-int		Extract_Min(double angle);
+//int		Extract_Hour(double angle);
+//int		Extract_Min(double angle);
 
-void Extract_Hands(Mat gray, Mat &bgr, const int& nline, int& hour, int& minute) {
+void Extract_Hands(Mat gray, Mat &bgr, const int& nline, double& ang) {
 
 	double rho = 1;																		//수직거리 	
 	double theta = CV_PI / 180;	
@@ -40,20 +40,20 @@ void Extract_Hands(Mat gray, Mat &bgr, const int& nline, int& hour, int& minute)
 	//**** 호프변환 직선 검출 ****
 	vector<Vec4i> lines;																// 검출된 선 
 	HoughLinesP(gray, lines, rho, theta, 50, 50, 10);									//확률적 호프 변환 
-
-	draw_Lines(bgr, lines, nline, hour, minute);										//검출 된 선을 그리기 
+	
+	draw_Lines(bgr, lines, nline, ang);										//검출 된 선을 그리기 
 																						//세번째 인자는 그릴 선 개수 	
 }//Extract_Hands
 
 
-void draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, int& hour, int& minute) {	//lines는 검출된 선의 시작점(x, y), 끝점(x, y)를 가짐
+void draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, double& ang) {	//lines는 검출된 선의 시작점(x, y), 끝점(x, y)를 가짐
 																							//int형 vector 변수에 4개의 원소를 집어넣기	
 	Vec4i li;																				//선의 좌표를 담고 있는 원소 4개 짜리 int형 vector 변수 									
 	int	  x = (bgr.cols) / 2;																
 	int   y = (bgr.rows) / 2; 
 	Point pt_center(x, y);																	//이미지의 중심 	
-	int	  HOURS;
-	int   MINUTES;
+	//int	  HOURS;
+	//int   MINUTES;
 
 	for (size_t i = 0; i < min((int)lines.size(), nline); i++)								//라인의 크기와 nline을 비교해서 적은 수를 정해 for문 반복 
 	{
@@ -70,7 +70,7 @@ void draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, int& hour, int&
 			line(bgr, pt_start, pt_end, Scalar(0, 255, 0), 1, LINE_AA);						//분침 추출 
 
 			cout << endl;
-			cout << "바늘 : 분침 | 색상 : 초록 " << endl<<endl;
+			cout << " 검출 바늘 : 계기판 | 바늘 색상 : 초록 = 메인 바늘 " << endl<<endl;
 
 			cout << "포인트 pt_start : 시작점 " << pt_start << endl;
 			cout << "포인트 pt_end : 종료점 " << pt_end << endl<<endl;
@@ -80,8 +80,9 @@ void draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, int& hour, int&
 
 			angle = Calc_Angle(pt_center, pt_angle);
 			cout << "angle :" << angle << endl<<endl;
-
-			MINUTES = Extract_Min(angle);
+			cout << "==========================================================" << endl;
+			ang = angle;
+			//MINUTES = Extract_Min(angle);
 		}	
 
 		else if (i == 2) {			//i > lines.size()/2
@@ -89,7 +90,7 @@ void draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, int& hour, int&
 			line(bgr, pt_start, pt_end, Scalar(0, 0, 255), 1, LINE_AA);						//시침 추출 
 
 			cout << endl;
-			cout << "바늘 : 시침 | 색상 : 빨강 " << endl<<endl;
+			cout << " 검출 바늘 : 계기판 | 바늘 색상 : 빨강 = 서브 바늘 " << endl<<endl;
 
 			cout << "포인트 pt_start : 시작점 " << pt_start << endl;
 			cout << "포인트 pt_end : 종료점 " << pt_end << endl<<endl;
@@ -99,17 +100,17 @@ void draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, int& hour, int&
 
 			angle = Calc_Angle(pt_center, pt_angle);
 			cout << "angle :" << angle << endl<<endl;
-
-			HOURS= Extract_Hour(angle);
+			ang = angle;
+			//HOURS= Extract_Hour(angle);
 		}
 	}//for()
 
-	hour = HOURS;
-	minute = MINUTES;
+	//hour = HOURS;
+	//minute = MINUTES;
 
-	cout << endl << "이미지의 시간 : ";
-	cout << HOURS << "시  "<< MINUTES <<" 분 " << endl;
-	imshow("시침 분침 표시 ", bgr);
+	//cout << endl << "이미지의 시간 : ";
+	//cout << HOURS << "시  "<< MINUTES <<" 분 " << endl;
+	//imshow("바늘 검출 표시 ", bgr);
 }//draw_Lines()
 
 
@@ -161,40 +162,40 @@ double Calc_Angle(Point2d center, Point2d angle_point) {									//start는 이미�
 
 
 //**** 시, 분 추출 ****
-int Extract_Hour(double angle) {					
+//int Extract_Hour(double angle) {					
+//
+//	double hour;										
+//
+//	hour = angle / 30.0;																	//12시간을 360도로 1시간을 30도로 표현 
+//
+//	if (hour > 11.99) {																		//시간의 데이터형이 double 캐스팅연산을 하면 소수점이 잘려 치명적인 오류 발생 				
+//		cout << " 결과 : "  << hour << "시 " << endl;										//그래서 거의 정수와 가까운 근사값은 그냥 출력 					
+//	}
+//
+//	else {
+//		cout << " 결과 : " << (int)hour << "시 " << endl;									//그렇지 않으면 정수형으로 캐스팅 연산 후 출력 
+//	}
+//
+//	return (int)hour;
+//}
 
-	double hour;										
 
-	hour = angle / 30.0;																	//12시간을 360도로 1시간을 30도로 표현 
-
-	if (hour > 11.99) {																		//시간의 데이터형이 double 캐스팅연산을 하면 소수점이 잘려 치명적인 오류 발생 				
-		cout << " 결과 : "  << hour << "시 " << endl;										//그래서 거의 정수와 가까운 근사값은 그냥 출력 					
-	}
-
-	else {
-		cout << " 결과 : " << (int)hour << "시 " << endl;									//그렇지 않으면 정수형으로 캐스팅 연산 후 출력 
-	}
-
-	return (int)hour;
-}
-
-
-int Extract_Min(double angle) {
-
-	double min;
-
-	min = angle / 6.0;
-
-	if (min > 59.99) {		
-							 
-		min = 0.0;																		   // 60분이란 분 또한 없기 때문에 0으로 초기화				
-		cout << " 결과 : " << min << "분" << endl;
-	}
-
-	else {
-		cout << " 결과 : " << (int)min << "분" << endl;
-	}
-
-	return (int)min;
-}
+//int Extract_Min(double angle) {
+//
+//	double min;
+//
+//	min = angle / 6.0;
+//
+//	if (min > 59.99) {		
+//							 
+//		min = 0.0;																		   // 60분이란 분 또한 없기 때문에 0으로 초기화				
+//		cout << " 결과 : " << min << "분" << endl;
+//	}
+//
+//	else {
+//		cout << " 결과 : " << (int)min << "분" << endl;
+//	}
+//
+//	return (int)min;
+//}
 

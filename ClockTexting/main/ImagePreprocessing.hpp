@@ -22,24 +22,25 @@ void ExtractCircleLine(Mat origianl_img, Mat& mask_img) {
 	Mat gray_img;																//그레이스케일 전처리 행렬 
 	Mat hough_img;																//원 검출 행렬 		
 	
-	imshow(" 원본 이미지 ", origianl_img);										//원본이미지 출력 
+	//imshow(" 원본 이미지 ", origianl_img);										//원본이미지 출력 
 
 	Size imgSize(280, 280);														 		
 	resize(origianl_img, origianl_img, imgSize);								//각기 다른 해상도의 이미지를 특정 해상도 크기로 동일 변경 
-
+	//imshow("resize", origianl_img);
 	cvtColor(origianl_img, gray_img, COLOR_BGR2GRAY);							//컬러 이미지를 그레이 스케일 이미지로 변경 
  
 	medianBlur(gray_img, hough_img, 5);											//미디언 블러를 사용하여 노이즈 제거 	
 	
+
 	vector<Vec3f>  circles;														//원 검출, float형 원소3개를 가지는 vector 변수 
 	Point		   maskPoints;													//원의 x, y좌표를 받아오기 위한 좌표 
-	int			   maskRadius;													//원의 반지름을 받아오기 위한 값 
+	int			   maskRadius = 0;													//원의 반지름을 받아오기 위한 값 
 	
 	//**** 호프변환 원 검출 **** 
-	HoughCircles(hough_img, circles, HOUGH_GRADIENT, 1, 30, 200, 50, 0, 0);		//허프 변환  
+	HoughCircles(hough_img, circles, HOUGH_GRADIENT, 1, 85, 50, 100, 0, 0);		//허프 변환                      20,50,35
 																				//해상도 280x280에 대한 
 																				//1 , 30 , 200, 50, 0, 0 은 280, 280 	
-	
+																				//4번째 매개변수는 건들지 x 
 	for (size_t i = 0; i < circles.size(); i++) {								//검출된 원의 x, y 좌표, 반지름 추출 
 
 		Point	center(cvRound(circles[i][0]), cvRound(circles[i][1]));			// x, y 좌표 
@@ -58,25 +59,25 @@ void ExtractCircleLine(Mat origianl_img, Mat& mask_img) {
 						
 	bitwise_and(gray_img, gray_img, mask_img, mask);							//시간 추출에 컬러는 필요없으므로 	그레이스케일 이미지로 1채널짜리 마스크로 처리							
 	
-	imshow("mask",mask);														//마스크	원본											
-	imshow("Hough Circle Transform", origianl_img);								//검출된 원 출력
-	imshow("masking image", mask_img);											//마스킹 된 이미지 
+	//imshow("mask",mask);														//마스크	원본											
+	//imshow("Hough Circle Transform", origianl_img);								//검출된 원 출력
+	//imshow("masking image", mask_img);											//마스킹 된 이미지 
 	
 }//ExtractCircleLine
 
 
-void ContourRect(Mat mask_img, Mat& contour_img){	
+void ContourRect(Mat mask_img, Mat& contour_img){
 	
 	int thresh = 50;
 	Mat gaussian_img;																//가우시안블러 결과
 									
 	GaussianBlur(mask_img, gaussian_img, Size(5, 5), 2, 2);							//contour외곽선 추출을 위한 전처리
 											 
-	imshow("미디언 블러",gaussian_img);
+	//imshow("가우시안 블러",gaussian_img);
 
 	Canny(gaussian_img, gaussian_img, thresh, thresh * 2);							//엣지 검출		
 																					//50, 100은 threshhold 
-	imshow("엣지검출", gaussian_img);
+	//imshow("엣지검출", gaussian_img);
 
 	//**** contour 가장 큰 외각선 추출 작업 **** 
 	vector<vector<Point>> contours;													//검출될 외곽선 점 
@@ -102,7 +103,7 @@ void ContourRect(Mat mask_img, Mat& contour_img){
 	//**** 외곽선만큼 사이즈 축소 ****
 	contour_img = resize_img(rect);																//사각형 영역만큼만 이미지 축소 
 
-	imshow("사각영역", resize_img);
-	imshow("외곽선 추출", contour_img);
+	//imshow("사각영역", resize_img);
+	//imshow("외곽선 추출", contour_img);
 
 }//ContourRect
