@@ -9,7 +9,7 @@
 // 마지막 수정 일시  : 2019. 06. 14.
 // 작성자 및 수정자  : 이동욱 
 // e-mail			: dongwookRaynor@gmail.com 
-// github 링크		: https://github.com/Lee-Dong-Wook/ClockTexting
+// github 링크		: https://github.com/Lee-Dong-Wook/Automatic-Redaing-Analog-Guage-System
 
 #pragma once
 #include <opencv2/opencv.hpp>

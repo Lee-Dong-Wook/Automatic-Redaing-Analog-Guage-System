@@ -1,0 +1,28 @@
+﻿  classify_number.cpp
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(6,74): error C2440: 'default argument': cannot convert from 'cv::Mat' to 'cv::Mat &'
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(6,72): message : A non-const reference may only be bound to an lvalue
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(36,1): error C2084: function 'bool vertify_plate(cv::RotatedRect)' already has a body
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\preprocess.hpp(20): message : see previous definition of 'vertify_plate'
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(58,7): error C2065: 'vertify_plate': undeclared identifier
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(63,79): error C2572: 'draw_rotatedRect': redefinition of default argument: parameter 1
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\preprocess.hpp(46): message : see declaration of 'draw_rotatedRect'
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(64,1): error C2084: function 'void draw_rotatedRect(cv::Mat &,cv::RotatedRect,cv::Scalar,int)' already has a body
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\preprocess.hpp(46): message : see previous definition of 'draw_rotatedRect'
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(76,13): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(88,53): warning C4244: 'argument': conversion from 'int' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=float
+          ]
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(88,40): warning C4244: 'argument': conversion from 'int' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=float
+          ]
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(145,1): error C2084: function 'std::vector<cv::Mat,std::allocator<cv::Mat>> make_candidates(cv::Mat,std::vector<cv::RotatedRect,std::allocator<cv::RotatedRect>> &)' already has a body
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\candidate.hpp(49): message : see previous definition of 'make_candidates'
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\find_plates.hpp(150,7): error C2065: 'vertify_plate': undeclared identifier
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\classify_number.cpp(33,30): error C2065: 'make_candidates': undeclared identifier
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\classify_number.cpp(33,64): error C2440: 'initializing': cannot convert from 'std::vector<cv::Mat,std::allocator<cv::Mat>> (__cdecl *)(cv::Mat,std::vector<cv::RotatedRect,std::allocator<cv::RotatedRect>> &)' to 'std::vector<cv::Mat,std::allocator<cv::Mat>>'
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\classify_number.cpp(33,64): message : No constructor could take the source type, or constructor overload resolution was ambiguous
+C:\Github\Automatic-Redaing-Analog-Guage-System\ClockTexting\KNNapplication\classify_number.cpp(62,3): error C2065: 'draw_rotatedRect': undeclared identifier

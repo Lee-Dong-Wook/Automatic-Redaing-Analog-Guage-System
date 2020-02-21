@@ -14,7 +14,7 @@
 // 마지막 수정 일시  : 2019. 06. 14.
 // 작성자 및 수정자  : 이동욱 
 // e-mail			: dongwookRaynor@gmail.com 
-// github 링크		: https://github.com/Lee-Dong-Wook/ClockTexting
+// github 링크		: https://github.com/Lee-Dong-Wook/Automatic-Redaing-Analog-Guage-System
 
 #include <opencv2/opencv.hpp>
 #include <iostream>
@@ -67,7 +67,7 @@ void draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, double& ang) {	
 		//**** 검출된 선에 대해 시,분 구분  ****
 		if(i == 0){
 			
-			line(bgr, pt_start, pt_end, Scalar(0, 255, 0), 1, LINE_AA);						//분침 추출 
+			line(bgr, pt_start, pt_end, Scalar(0, 255, 0), 1, LINE_AA);						//서브 바늘 추출 
 
 			cout << endl;
 			cout << " 검출 바늘 : 계기판 | 바늘 색상 : 초록 = 메인 바늘 " << endl<<endl;
@@ -87,7 +87,7 @@ void draw_Lines(Mat& bgr, vector<Vec4i> lines, const int& nline, double& ang) {	
 
 		else if (i == 2) {			//i > lines.size()/2
 
-			line(bgr, pt_start, pt_end, Scalar(0, 0, 255), 1, LINE_AA);						//시침 추출 
+			line(bgr, pt_start, pt_end, Scalar(0, 0, 255), 1, LINE_AA);						//메인 바늘 추출 
 
 			cout << endl;
 			cout << " 검출 바늘 : 계기판 | 바늘 색상 : 빨강 = 서브 바늘 " << endl<<endl;
